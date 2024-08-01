@@ -1,3 +1,7 @@
 add_executable (fits2table  fits2table/fits2table.cc)
 target_link_libraries (fits2table casa_fits ${CASACORE_ARCH_LIBS})
-install(TARGETS fits2table DESTINATION bin)
+if (DEFINED CMAKE_INSTALL_BINDIR)
+    install(TARGETS fits2table DESTINATION ${CMAKE_INSTALL_BINDIR})
+else()
+    install(TARGETS fits2table DESTINATION bin)
+endif()
