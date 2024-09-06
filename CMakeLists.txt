@@ -1,6 +1,6 @@
 cmake_minimum_required (VERSION 3.14.0)
 
-project(casacore VERSION 3.5.0)
+project(casacore VERSION 3.6.1)
 
 include(CheckCXXCompilerFlag)
 include(CheckCCompilerFlag)
@@ -19,7 +19,7 @@ if (POLICY CMP0074)
 endif()
 
 # Increment the PROJECT_SOVERSION every time you update VERSION_MINOR!
-SET(PROJECT_SOVERSION 7)
+SET(PROJECT_SOVERSION 8)
 
 SET(NO_SOVERSION FALSE CACHE BOOL "do not add version information to shared libraries")
 set (CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
@@ -34,7 +34,7 @@ set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Astronomical data processing library")
 
 set (CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
-# By default build only Python2 bindings
+# By default build only Python3 bindings
 option (BUILD_PYTHON "Build the python2 bindings" NO)
 option (BUILD_PYTHON3 "Build the python3 bindings" YES)
 
@@ -324,7 +324,11 @@ find_package (DL)
 if (USE_READLINE)
     find_package (Readline REQUIRED)
 endif (USE_READLINE)
-find_package (SOFA)
+
+if (BUILD_TESTING)
+    find_package (SOFA)
+endif()
+
 if (USE_ADIOS2)
     find_package (ADIOS2 2.6.0 CONFIG REQUIRED)
     if(NOT USE_MPI)
